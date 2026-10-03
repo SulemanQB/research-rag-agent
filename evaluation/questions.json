@@ -1,0 +1,31 @@
+{
+  "status": "READY",
+  "notes": "Informal retrieval questions grounded in the locally stored NIST AI RMF publications.",
+  "questions": [
+    {
+      "question": "What are the four core functions of the NIST AI Risk Management Framework?",
+      "expected_document": "NIST.AI.100-1.pdf",
+      "expected_pages": []
+    },
+    {
+      "question": "What characteristics does the NIST framework associate with trustworthy and responsible AI systems?",
+      "expected_document": "NIST.AI.100-1.pdf",
+      "expected_pages": []
+    },
+    {
+      "question": "What are examples of risks that are especially relevant to generative AI systems?",
+      "expected_document": "NIST.AI.600-1.pdf",
+      "expected_pages": []
+    },
+    {
+      "question": "How does the NIST Generative AI Profile organize actions for managing generative AI risks?",
+      "expected_document": "NIST.AI.600-1.pdf",
+      "expected_pages": []
+    },
+    {
+      "question": "How can organizations use profiles to apply the AI Risk Management Framework to a specific context?",
+      "expected_document": "NIST.AI.100-1.pdf",
+      "expected_pages": []
+    }
+  ]
+}

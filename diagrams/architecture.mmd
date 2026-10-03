@@ -1,0 +1,20 @@
+flowchart TD
+    A[User Query] --> B[Query Router]
+    B --> C{Route}
+    C -->|CORPUS_SEARCH| D[Embed Query]
+    C -->|GENERAL_ANSWER| E[LLM Only]
+    D --> F[Chroma Vector DB]
+    F --> G[Top-K Retrieved Chunks]
+    G --> H{LLM available?}
+    H -->|Yes| I[LLM + Context]
+    H -->|No| J[Extractive Fallback]
+    E --> K[Answer with Citations]
+    I --> K[Answer with Citations]
+    J --> K
+
+    subgraph ingestion[Ingestion Pipeline]
+        I1[Local PDFs / Notes] --> I2[Text Extraction]
+        I2 --> I3[Chunking]
+        I3 --> I4[Embedding Model]
+        I4 --> I5[Chroma]
+    end

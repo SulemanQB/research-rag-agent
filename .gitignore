@@ -1,0 +1,27 @@
+# Secrets and local environments
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local Chroma index and source documents.
+# Directory patterns ignore the whole tree, including nested files.
+chroma_db/
+data/
+
+# Local outputs and notes that must not be published
+outputs/
+analysis.md
+
+# OS junk
+.DS_Store
+Thumbs.db
+*.log
