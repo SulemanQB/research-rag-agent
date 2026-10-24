@@ -1,0 +1,35 @@
+{
+  "notes": "Fixture questions for the plain-RAG versus LangGraph comparison. Expected facts are case-insensitive substrings of a correct answer.",
+  "questions": [
+    {
+      "id": "core-functions",
+      "question": "What are the four core functions named in the local risk notes?",
+      "expected_facts": ["govern", "map", "measure", "manage"]
+    },
+    {
+      "id": "generative-risks",
+      "question": "What generative system risks do the local notes name?",
+      "expected_facts": ["confabulation", "data privacy", "information integrity"]
+    },
+    {
+      "id": "trustworthy",
+      "question": "Which characteristics do the local notes associate with trustworthy systems?",
+      "expected_facts": ["explainable and interpretable", "privacy-enhanced"]
+    },
+    {
+      "id": "percentage",
+      "question": "Calculate 7 / 40 * 100.",
+      "expected_facts": ["17.5"]
+    },
+    {
+      "id": "glossary-map",
+      "question": "Look up the glossary entry for Map.",
+      "expected_facts": ["identifies the context, intended use, and risks"]
+    },
+    {
+      "id": "arxiv-disabled",
+      "question": "Search arXiv for papers on retrieval augmented generation.",
+      "expected_facts": ["disabled"]
+    }
+  ]
+}

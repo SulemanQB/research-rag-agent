@@ -1,0 +1,1 @@
+The local notes associate trustworthy systems with these characteristics: valid and reliable, safe, secure and resilient, accountable and transparent, explainable and interpretable, privacy-enhanced, and fair.

@@ -13,6 +13,24 @@ def _positive_int(value: str) -> int:
     return number
 
 
+def _print_agent_result(result: dict[str, Any]) -> None:
+    print("\nPLAN")
+    print("----")
+    print(result.get("plan") or "")
+    print("\nTRACE")
+    print("-----")
+    print(" -> ".join(result.get("trace") or []))
+    print(f"Steps: {result.get('step_count', 0)} / {result.get('max_steps', 0)}")
+    print(f"Reflections: {result.get('reflect_count', 0)}")
+    print(f"Grounded: {result.get('grounded')} ({result.get('reflection_notes', '')})")
+    if result.get("tool_calls"):
+        print("\nTool calls:")
+        for index, call in enumerate(result["tool_calls"], start=1):
+            print(f"{index}. {call.get('name')} {call.get('arguments')}")
+    print("\nAnswer:")
+    print(result.get("answer", ""))
+
+
 def _print_query_result(result: dict[str, Any]) -> None:
     print("\nROUTE")
     print("-----")
@@ -41,6 +59,18 @@ def main() -> None:
     chat_parser.add_argument("--top-k", type=_positive_int, default=3, help="Number of relevant chunks to retrieve")
 
     evaluate_parser = subparsers.add_parser("evaluate", help="Run informal retrieval evaluation")
+
+    agent_parser = subparsers.add_parser("agent", help="Answer with the LangGraph document agent")
+    agent_parser.add_argument("question", nargs="+", help="Question to ask")
+    agent_parser.add_argument("--top-k", type=_positive_int, default=3, help="Number of passages to retrieve")
+    agent_parser.add_argument(
+        "--max-steps",
+        type=_positive_int,
+        default=None,
+        help="Maximum decision steps. Defaults to AGENT_MAX_STEPS or 6.",
+    )
+
+    subparsers.add_parser("agent-eval", help="Compare plain extractive RAG with the LangGraph agent")
 
     args = parser.parse_args()
 
@@ -71,6 +101,20 @@ def main() -> None:
 
         result = run_evaluation()
         print(result)
+        return
+
+    if args.command == "agent":
+        from src.agent import run_agent
+
+        question = " ".join(args.question)
+        result = run_agent(question, top_k=args.top_k, max_steps=args.max_steps)
+        _print_agent_result(result)
+        return
+
+    if args.command == "agent-eval":
+        from evaluation.agent_eval import main as run_agent_eval
+
+        run_agent_eval()
         return
 
     parser.print_help()

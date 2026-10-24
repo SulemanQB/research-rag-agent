@@ -20,14 +20,14 @@ class LLMClient:
         self.base_url = (base_url or os.getenv("LLM_BASE_URL") or "http://localhost:8000/v1").rstrip("/")
         self.model = model or os.getenv("LLM_MODEL", "gpt-4o-mini")
 
-    def _request_payload(self, prompt: str) -> Dict[str, Any]:
+    def _request_payload(self, prompt: str, temperature: float | None = None) -> Dict[str, Any]:
         return {
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0.2,
+            "temperature": 0.2 if temperature is None else temperature,
         }
 
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, temperature: float | None = None) -> str:
         """Generate text or raise a descriptive configuration/network error."""
         if not self.api_key and "localhost" not in self.base_url:
             raise RuntimeError(
@@ -40,7 +40,12 @@ class LLMClient:
             headers["Authorization"] = f"Bearer {self.api_key}"
 
         try:
-            response = requests.post(url, json=self._request_payload(prompt), headers=headers, timeout=120)
+            response = requests.post(
+                url,
+                json=self._request_payload(prompt, temperature=temperature),
+                headers=headers,
+                timeout=120,
+            )
             response.raise_for_status()
         except requests.RequestException as exc:
             raise RuntimeError(

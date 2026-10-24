@@ -8,6 +8,11 @@ def _tokenize(text: str) -> List[str]:
     return re.findall(r"\w+", (text or "").lower())
 
 
+def document_overlap(query: str, document: Dict[str, Any]) -> float:
+    """Return the fraction of query tokens that appear in a document."""
+    return _score_document(query, document)
+
+
 def _score_document(query: str, document: Dict[str, Any]) -> float:
     text = str(document.get("text", ""))
     query_terms = _tokenize(query)

@@ -1,0 +1,18 @@
+flowchart TD
+    START([Question]) --> PLAN[plan]
+    PLAN --> DECIDE{decide}
+    DECIDE -->|retrieve| RET[retrieve corpus]
+    DECIDE -->|calculate| CALC[calculate]
+    DECIDE -->|lookup| LOOK[lookup glossary]
+    DECIDE -->|search| SEARCH[arXiv search]
+    DECIDE -->|draft| DRAFT[draft answer]
+    DECIDE -->|step limit reached| FINAL[finalize]
+    RET -->|selected by decide| DECIDE
+    RET -->|selected by reflect| DRAFT
+    CALC --> DECIDE
+    LOOK --> DECIDE
+    SEARCH --> DECIDE
+    DRAFT --> REFLECT{reflect}
+    REFLECT -->|not grounded and budget remains| RET
+    REFLECT -->|grounded or budget used| FINAL
+    FINAL --> ENDNODE([Answer with citations])
